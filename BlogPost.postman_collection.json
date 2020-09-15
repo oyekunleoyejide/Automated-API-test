@@ -1,0 +1,131 @@
+{
+	"info": {
+		"_postman_id": "f335671e-dd49-447d-b198-fd52753fc5c7",
+		"name": "BlogPost",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET",
+			"item": [
+				{
+					"name": "check blogLink",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "472ef0b6-b366-46da-a0ff-510d660b1b62",
+								"exec": [
+									"pm.variables.get(\"My first blog post :\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{blogLink}}",
+							"host": [
+								"{{blogLink}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "POST",
+			"item": [
+				{
+					"name": "create a new blog post",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "41321231-203c-4fed-9e61-21088f29c594",
+								"exec": [
+									"var blogLink = pm.response.to.have.header(\"Location\")\r",
+									"pm.environment.set(\"blogLink\", pm.response.headers.get('Location'));\r",
+									"\r",
+									"\r",
+									"pm.test(\"Status code name has string\", function () {\r",
+									"    pm.response.to.have.status(\"Created\");\r",
+									"});\r",
+									"pm.test(\"Content-Type is present\", function () {\r",
+									"    pm.response.to.have.header(\"Content-Type\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"content\": \"My first blog post :)\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/jsonBlob",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"jsonBlob"
+							]
+						},
+						"description": "https://jsonblob.com/api/jsonBlob"
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "DELETE",
+			"item": [
+				{
+					"name": "delete a file",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "51779ec1-b95e-47b5-8b5b-a6e1be0d8fcf",
+								"exec": [
+									"pm.test(\"status code is 405\", function () {\r",
+									"    pm.response.to.have.status(405);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}",
+							"host": [
+								"{{baseURL}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
